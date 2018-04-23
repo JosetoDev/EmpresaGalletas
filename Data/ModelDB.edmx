@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GalletasDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblArticulos">
+          <Key>
+            <PropertyRef Name="IdArticulo" />
+          </Key>
+          <Property Name="IdArticulo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="NomArticulo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Categoria" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Precio" Type="int" Nullable="false" />
+          <Property Name="Eliminado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblExistencias">
+          <Key>
+            <PropertyRef Name="IdExistencias" />
+          </Key>
+          <Property Name="IdExistencias" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="IdArticulo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="FechaVence" Type="datetime" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Lote" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblExistencias_tblArticulos">
+          <End Role="tblArticulos" Type="Self.tblArticulos" Multiplicity="1" />
+          <End Role="tblExistencias" Type="Self.tblExistencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblArticulos">
+              <PropertyRef Name="IdArticulo" />
+            </Principal>
+            <Dependent Role="tblExistencias">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GalletasDBModelStoreContainer">
+          <EntitySet Name="tblArticulos" EntityType="Self.tblArticulos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblExistencias" EntityType="Self.tblExistencias" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblExistencias_tblArticulos" Association="Self.FK_tblExistencias_tblArticulos">
+            <End Role="tblArticulos" EntitySet="tblArticulos" />
+            <End Role="tblExistencias" EntitySet="tblExistencias" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GalletasDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblArticulos">
+          <Key>
+            <PropertyRef Name="IdArticulo" />
+          </Key>
+          <Property Name="IdArticulo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NomArticulo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Categoria" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Precio" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblExistencias" Relationship="Self.FK_tblExistencias_tblArticulos" FromRole="tblArticulos" ToRole="tblExistencias" />
+          <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblExistencias">
+          <Key>
+            <PropertyRef Name="IdExistencias" />
+          </Key>
+          <Property Name="IdExistencias" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdArticulo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaVence" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Lote" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblArticulos" Relationship="Self.FK_tblExistencias_tblArticulos" FromRole="tblExistencias" ToRole="tblArticulos" />
+        </EntityType>
+        <Association Name="FK_tblExistencias_tblArticulos">
+          <End Role="tblArticulos" Type="Self.tblArticulos" Multiplicity="1" />
+          <End Role="tblExistencias" Type="Self.tblExistencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblArticulos">
+              <PropertyRef Name="IdArticulo" />
+            </Principal>
+            <Dependent Role="tblExistencias">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GalletasDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblArticulos" EntityType="Self.tblArticulos" />
+          <EntitySet Name="tblExistencias" EntityType="Self.tblExistencias" />
+          <AssociationSet Name="FK_tblExistencias_tblArticulos" Association="Self.FK_tblExistencias_tblArticulos">
+            <End Role="tblArticulos" EntitySet="tblArticulos" />
+            <End Role="tblExistencias" EntitySet="tblExistencias" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GalletasDBModelStoreContainer" CdmEntityContainer="GalletasDBEntities">
+          <EntitySetMapping Name="tblArticulos">
+            <EntityTypeMapping TypeName="GalletasDBModel.tblArticulos">
+              <MappingFragment StoreEntitySet="tblArticulos">
+                <ScalarProperty Name="Eliminado" ColumnName="Eliminado" />
+                <ScalarProperty Name="IdArticulo" ColumnName="IdArticulo" />
+                <ScalarProperty Name="NomArticulo" ColumnName="NomArticulo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblExistencias">
+            <EntityTypeMapping TypeName="GalletasDBModel.tblExistencias">
+              <MappingFragment StoreEntitySet="tblExistencias">
+                <ScalarProperty Name="IdExistencias" ColumnName="IdExistencias" />
+                <ScalarProperty Name="IdArticulo" ColumnName="IdArticulo" />
+                <ScalarProperty Name="FechaVence" ColumnName="FechaVence" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Lote" ColumnName="Lote" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
